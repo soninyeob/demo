@@ -1,0 +1,8 @@
+rootProject.name = 'demo'
+
+include 'modules:echo'
+include 'modules:echo-webflux'
+include 'modules:event'
+include 'modules:kafka'
+include 'modules:test'
+include 'modules:watcher'

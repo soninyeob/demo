@@ -1,4 +1,4 @@
-package demo.echo;
+package demo.echo.webapi;
 
 import com.google.common.base.Strings;
 import org.springframework.http.MediaType;

@@ -1,8 +1,23 @@
-server:
-  port: 9001
----
 spring:
-  devtools:
-    add-properties: false
-    restart:
-      enabled: true
+  profiles:
+    active: local
+
+server:
+  port: 9324
+  servlet:
+    context-path: /api/crypto
+  shutdown: graceful
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      show-details: never
+
+logging:
+  level:
+    root: DEBUG
+    demo.echo: DEBUG

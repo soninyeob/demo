@@ -1,21 +1,20 @@
 package demo.echo;
 
-import com.google.common.base.Strings;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/v1")
 public class EchoController {
 
-    @GetMapping("/echo")
-    public String echoParam(@RequestParam(required = false) String value) {
-        return "echo:param [" + Strings.nullToEmpty(value) + "]";
+    @PostMapping("/encrypt")
+    public String encrypt() {
+        return "echo: encrypt";
     }
 
-    @GetMapping("/echo/{value}")
-    public String echoPath(@PathVariable String value) {
-        return "echo:path [" + value + "]";
+    @PostMapping("/decrypt")
+    public String decrypt() {
+        return "echo: decrypt";
     }
 }

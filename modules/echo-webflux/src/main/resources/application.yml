@@ -1,8 +1,2 @@
 server:
-  port: 9002
----
-spring:
-  devtools:
-    add-properties: false
-    restart:
-      enabled: true
+  port: 80

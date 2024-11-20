@@ -1,0 +1,10 @@
+allprojects {
+    ext {
+        lombokVersion = '1.18.20'
+        bootVersion = '2.7.18'
+        guavaVersion = '33.2.0-jre'
+
+        assertjVersion = '3.23.1'
+        mockitoVersion = '4.6.1'
+    }
+}

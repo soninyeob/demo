@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <springProfile name="local">
+        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+            <encoder>
+                <charset>UTF-8</charset>
+                <pattern>%d{yyMMdd HHmmss.SSS} [%20.20t] %-5p %-50.50c{50} %4L - %m%n</pattern>
+            </encoder>
+        </appender>
+    </springProfile>
+
+    <springProfile name="!local">
+        <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+            <file>/logs/web.log</file>
+            <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                <fileNamePattern>/logs/web-%d{yyMMdd}.log</fileNamePattern>
+                <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                    <maxFileSize>200MB</maxFileSize>
+                </timeBasedFileNamingAndTriggeringPolicy>
+                <maxHistory>30</maxHistory>
+            </rollingPolicy>
+            <encoder>
+                <charset>UTF-8</charset>
+                <pattern>%d{yyMMdd HHmmss.SSS} [%20.20t] %-5p %-50.50c{50} %4L - %m%n</pattern>
+            </encoder>
+        </appender>
+    </springProfile>
+
+    <root>
+        <springProfile name="local">
+            <appender-ref ref="CONSOLE" />
+        </springProfile>
+        <springProfile name="!local">
+            <appender-ref ref="FILE" />
+        </springProfile>
+    </root>
+
+    <logger name="org.springframework" level="info" />
+
+</configuration>

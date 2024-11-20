@@ -1,0 +1,33 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.18'
+    id 'io.spring.dependency-management' version '1.1.6'
+    id 'java'
+}
+
+group = 'demo'
+version = '1.0.0'
+
+tasks.withType(JavaCompile).configureEach {
+    sourceCompatibility = '11'
+    targetCompatibility = '11'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.34'
+    annotationProcessor 'org.projectlombok:lombok:1.18.34'
+
+    compileOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
+    implementation 'io.projectreactor:reactor-core:3.6.10'
+
+    implementation 'com.google.guava:guava:33.2.0-jre'
+}
+
+test {
+    useJUnitPlatform()
+}

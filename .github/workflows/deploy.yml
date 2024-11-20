@@ -1,0 +1,58 @@
+name: Build, Deploy
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+# projects/<PROJECT_NUMBER>/locations/global/workloadIdentityPools/<POOL_NAME>/providers/<PROVIDER_NAME>
+# my-service-account@my-project.iam.gserviceaccount.com
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Authenticate GCP with WIP
+        uses: google-github-actions/auth@v1
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIP }}
+          service_account: ${{ vars.GCP_SA }}
+
+      - name: Setup gcloud
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          project_id: ${{ vars.GCP_PROJECT_ID }}
+
+      - name: Configure GAR
+        run: |-
+          gcloud auth configure-docker asia-docker.pkg.dev
+
+      - name: Get Credential GKE
+        uses: google-github-actions/get-gke-credentials@v1
+        with:
+          cluster_name: ${{ vars.GKE_CLUSTER }}
+          location: asia-northeast3-a
+          project_id: ${{ vars.GCP_PROJECT_ID }}
+
+      - name: Build
+        run: |-
+          docker build \
+          --tag "asia-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/demo/web:${{ github.sha }}" \
+          --build-arg PROFILES=dev \
+          -f modules/web/Dockerfile .
+
+      - name: Publish
+        run: |-
+          docker push "asia-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/demo/web:${{ github.sha }}"
+
+      - name: Deploy
+        run: |-
+          kubectl apply -f modules/web/deployment.yaml
+          kubectl rollout status deployment/web-deploy
+          kubectl get services -o wide

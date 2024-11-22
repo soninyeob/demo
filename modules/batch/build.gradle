@@ -1,0 +1,32 @@
+plugins {
+    id "org.springframework.boot" version "${bootVersion}"
+    id "io.spring.dependency-management" version "1.1.6"
+    id "java"
+}
+
+group = "demo"
+version = "1.0.0"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-batch"
+    implementation "org.springframework.boot:spring-boot-starter"
+    implementation "org.springframework.boot:spring-boot-starter-data-jdbc"
+    implementation "org.flywaydb:flyway-core"
+    implementation "org.flywaydb:flyway-mysql"
+    implementation "com.google.guava:guava:${guavaVersion}"
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    runtimeOnly "com.mysql:mysql-connector-j"
+    developmentOnly "org.springframework.boot:spring-boot-devtools"
+    testImplementation "org.springframework.boot:spring-boot-starter-test"
+    testImplementation "org.assertj:assertj-core:${assertjVersion}"
+    testImplementation "org.mockito:mockito-core:${mockitoVersion}"
+}
+
+test {
+    useJUnitPlatform()
+}

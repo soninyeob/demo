@@ -2,4 +2,5 @@ rootProject.name = 'demo'
 
 include 'modules:web'
 include 'modules:webflux'
+include 'modules:batch'
 

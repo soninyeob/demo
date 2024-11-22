@@ -1,4 +1,7 @@
 # docker build -t web:latest --build-arg profiles=dev-pc -f modules/web/Dockerfile .
+# --platform=linux/amd64
+# --progress=plain
+# --no-cache
 
 FROM eclipse-temurin:17-jammy AS builder
 
@@ -40,7 +43,7 @@ RUN jlink \
 FROM ubuntu:jammy
 
 ARG profiles
-RUN if [ -z "profiles" ]; then \
+RUN if [ -z "$profiles" ]; then \
   echo "require --build-arg profiles"; \
   exit 1; \
 fi
